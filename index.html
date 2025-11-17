@@ -19,11 +19,73 @@
         </a>
         <ul class="navLinks flex">
           <li><a href="#">Home</a></li>
-          <li><a href="#">Login</a></li>
-          <li><a href="#">SignUp</a></li>
+          <li id="navLogin"><a href="#" onclick="openLoginModal(event)">Login</a></li>
+          <li id="navSignup"><a href="#" onclick="openSignupModal(event)">SignUp</a></li>
+          <li id="navUser" style="display: none;">
+            <a href="#" onclick="toggleUserMenu(event)"><span id="userEmail"></span> ▼</a>
+            <div id="userMenu" class="userMenu" style="display: none;">
+              <a href="#" onclick="openGallery(event)">My Saved Images</a>
+              <a href="#" onclick="logout(event)">Logout</a>
+            </div>
+          </li>
         </ul>
       </nav>
     </header>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal" style="display: none;">
+      <div class="modalContent">
+        <span class="closeModal" onclick="closeLoginModal()">&times;</span>
+        <h2>Login</h2>
+        <form id="loginForm">
+          <label>
+            Email
+            <input type="email" id="loginEmail" required />
+          </label>
+          <label>
+            Password
+            <input type="password" id="loginPassword" required />
+          </label>
+          <button type="submit">Login</button>
+          <p class="toggleForm">Don't have an account? <a href="#" onclick="switchToSignup(event)">Sign up</a></p>
+        </form>
+        <div id="loginError" class="error"></div>
+      </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal" style="display: none;">
+      <div class="modalContent">
+        <span class="closeModal" onclick="closeSignupModal()">&times;</span>
+        <h2>Sign Up</h2>
+        <form id="signupForm">
+          <label>
+            Email
+            <input type="email" id="signupEmail" required />
+          </label>
+          <label>
+            Password
+            <input type="password" id="signupPassword" required />
+          </label>
+          <label>
+            Confirm Password
+            <input type="password" id="signupPasswordConfirm" required />
+          </label>
+          <button type="submit">Sign Up</button>
+          <p class="toggleForm">Already have an account? <a href="#" onclick="switchToLogin(event)">Login</a></p>
+        </form>
+        <div id="signupError" class="error"></div>
+      </div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="modal" style="display: none;">
+      <div class="modalContent galleryModalContent">
+        <span class="closeModal" onclick="closeGallery()">&times;</span>
+        <h2>My Saved Images (Last 8)</h2>
+        <div id="galleryGrid" class="galleryGrid"></div>
+      </div>
+    </div>
 
     <!-- Generator Form + Preview -->
     <main>
@@ -52,8 +114,18 @@
               <input type="text" name="theme" placeholder="Futuristic, neon, tech" />
             </label>
             <label>
+              Location
+              <input type="text" name="location" placeholder="New York, USA" />
+            </label>
+          </div>
+
+          <div class="row">
+            <label>
               Date
               <input type="date" name="date" class="date-input"/>
+            </label>
+            <label>
+              &nbsp;
             </label>
           </div>
 
@@ -86,6 +158,7 @@
 
           <div class="actions">
             <button id="generateBtn" type="submit">Generate</button>
+            <button id="resetBtn" type="reset" class="resetBtn">Reset</button>
             <span id="status" class="status"></span>
           </div>
         </form>
@@ -93,7 +166,7 @@
         <div class="preview">
           <h2>Preview</h2>
           <div class="previewFrame">
-            <img id="previewImg" alt="Generated" />
+            <img id="previewImg"/>
           </div>
           <a id="downloadLink" class="download" href="#" target="_blank" rel="noopener">Open Image</a>
           <button id="downloadBtn" type="button" class="download" style="margin-left: 0.5rem;">Download</button>
